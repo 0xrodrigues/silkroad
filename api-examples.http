@@ -1,0 +1,81 @@
+### Silk Road API - Exemplos de Requisições
+### Use com extensões REST Client (VS Code) ou Postman
+
+@baseUrl = http://localhost:3000/api
+
+### Health Check
+GET http://localhost:3000/health
+
+### ========================================
+### PRODUCTS
+### ========================================
+
+### Listar todos os produtos
+GET {{baseUrl}}/products
+
+### Buscar produtos por termo
+GET {{baseUrl}}/products?search=curso
+
+### Buscar produtos por categoria
+GET {{baseUrl}}/products?category=Eletrônicos
+
+### Buscar produto por ID (substitua pelo ID real)
+GET {{baseUrl}}/products/PRODUCT_UUID_HERE
+
+### Criar novo produto
+POST {{baseUrl}}/products
+Content-Type: application/json
+
+{
+  "title": "Curso de React Avançado",
+  "description": "Aprenda React do básico ao avançado com projetos práticos e reais. Inclui hooks, context API, Redux, e muito mais.",
+  "sellerId": 1,
+  "price": 197.00,
+  "currency": "BRL",
+  "category": "Cursos Digitais",
+  "tags": ["react", "javascript", "frontend", "curso"],
+  "images": [
+    "https://via.placeholder.com/400/00C853/FFFFFF?text=React+Course"
+  ],
+  "quantity": 999,
+  "isDigital": true,
+  "deliveryMethod": null,
+  "estimatedDelivery": null
+}
+
+### Incrementar visualizações (substitua pelo ID real)
+PATCH {{baseUrl}}/products/PRODUCT_UUID_HERE/view
+
+### ========================================
+### ORDERS
+### ========================================
+
+### Criar novo pedido
+POST {{baseUrl}}/orders
+Content-Type: application/json
+
+{
+  "productId": "PRODUCT_UUID_HERE",
+  "buyerId": "9ade7b3e-e2e6-4a3b-b79b-62f6d855adf6",
+  "sellerId": "1",
+  "quantity": 1,
+  "price": 197.00,
+  "paymentMethod": "PIX",
+  "shippingAddress": "Rua Exemplo, 123 - São Paulo, SP",
+  "notes": "Entregar no período da manhã"
+}
+
+### Listar pedidos do comprador
+GET {{baseUrl}}/orders/buyer/9ade7b3e-e2e6-4a3b-b79b-62f6d855adf6
+
+### Listar pedidos do vendedor
+GET {{baseUrl}}/orders/seller/1
+
+### Atualizar status do pedido (substitua pelo ID real)
+PUT {{baseUrl}}/orders/ORDER_UUID_HERE/status
+Content-Type: application/json
+
+{
+  "status": "CONFIRMED",
+  "paymentStatus": "PAID"
+}
