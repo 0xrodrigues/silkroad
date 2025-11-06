@@ -1,28 +1,13 @@
-import productRepository from './product.repository.js';
+import productRepository from '../product.repository.js';
+import productValidation from './product.validation.js';
 
 class ProductService {
   /**
    * Create a new product
    */
   async create(data) {
-    // Validate required fields
-    if (!data.title || !data.description || !data.price) {
-      throw new Error('Title, description, and price are required');
-    }
 
-    if (!data.sellerId) {
-      throw new Error('Seller ID is required');
-    }
-
-    // Validate UUID format
-    const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-    if (!uuidRegex.test(data.sellerId)) {
-      throw new Error('Seller ID must be a valid UUID');
-    }
-
-    if (data.price <= 0) {
-      throw new Error('Price must be greater than 0');
-    }
+    await productValidation.validate(data);
 
     // Convert currency code to integer if provided
     if (data.currency) {
